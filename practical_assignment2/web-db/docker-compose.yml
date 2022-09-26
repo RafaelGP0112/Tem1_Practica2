@@ -1,0 +1,16 @@
+services:
+  db:
+    hostname: "dbcontainer"
+    build:
+      context: .
+      dockerfile: Dockerfile_db
+    ports: 
+    - 8306:3306
+  flask:
+    build: 
+      context: .
+      dockerfile: Dockerfile_flask
+    ports: 
+    - 9000:80
+    volumes:
+    - ./flask_app:/opt/app

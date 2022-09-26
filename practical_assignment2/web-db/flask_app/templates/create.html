@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>New Professor</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js" integrity="sha512-7oYXeK0OxTFxndh0erL8FsjGvrl2VMDor6fVqzlLGfwOQQqTbYsGPv4ZZ15QHfSk80doyaM0ZJdvkyDcVO7KFA==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-file-upload/2.6.1/angular-file-upload.min.js" integrity="sha512-axkIpxPnJn/ltsZKAG8OiY1Ef4bSZ3XiBj5DJOXC4tQG0519hu0kzVClhaVonpXIP6xJjDbLcNc88YiZb9pkEw==" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            var app = angular.module('ProfessorAddModule', []);
+            var controller = app.controller('ProfessorAddController', ($scope, $http) => {
+                $scope.professor = {};
+
+                $scope.addProfessor = () => {
+                    $http.post('/professors', $scope.professor).then((result) => {
+                        window.location.href = '/professorlist';
+                    });
+                }
+            });
+        </script>
+    </head>
+    <body>
+        <div class="container" ng-app="ProfessorAddModule" ng-controller="ProfessorAddController">
+            <h2 class="my-3 alert-success px-1 py-2 rounded">New Professor</h2>
+            <form ng-submit="addProfessor()">
+                  <div class="form-group">
+                    <label for="txtName">First name</label>
+                    <input type="text" class="form-control" id="txtName" ng-model="professor.first_name" placeholder="Enter Name" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="txtLastName">Last name</label>
+                    <input type="text" class="form-control" id="txtLastName" ng-model="professor.last_name" placeholder="Enter Last Name" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="txtCity">City</label>
+                    <input type="text" class="form-control" id="txtCity" ng-model="professor.city" placeholder="Enter City" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="txtAddress">Address</label>
+                    <input type="text" class="form-control" id="txtAddress" ng-model="professor.address" placeholder="Enter Address" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="txtSalary">Salary</label>
+                    <input type="number" min="0" class="form-control" id="txtSalary" ng-model="professor.salary" placeholder="Enter Salary" required>
+                  </div>
+                  <input type="submit" class="btn btn-success" value="Add professor" />
+                  <a href="/professorlist" class="btn btn-secondary">Return</a>
+            </form>
+        </div>
+    </body>
+</html>

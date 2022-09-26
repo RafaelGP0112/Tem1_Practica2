@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: basic-app
+spec:
+  selector:
+    matchLabels:
+      app: basic-app
+  template:
+    metadata:
+      labels:
+        app: basic-app
+    spec:
+      containers:
+      - name: flask-app
+        image: rafaelgp0112/practica2_flask
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+      - name: mysql
+        image: rafaelgp0112/practica2_db
+        resources:
+          limits:
+            memory: "1024Mi"
+            cpu: "1000m"
+        ports:
+        - containerPort: 3306
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dbcontainer
+spec:
+  type: ClusterIP
+  selector:
+    app: basic-app
+  ports:
+  - name: "mysql"
+    port: 3306
+    targetPort: 3306
+  - name: "flask-app"
+    port: 9000
+    targetPort: 80
+
+
